@@ -3,10 +3,10 @@ import { Table } from 'antd';
 import type { TableProps } from 'antd';
 import { Space } from 'antd';
 import { Link, useLoaderData, useLocation, useNavigate } from'react-router-dom';
-import TableSearch from '../components/tableSearch';
+import TableSearch from '../components/tableSearch.tsx';
 import { GET_USER_BY_NAME, GET_USERS } from '../schema/users.tsx';
 import UserDelete from './userDelete.tsx'
-import client from '../client';
+import clientStore from '../client.tsx';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
@@ -24,7 +24,7 @@ interface DataType {
 }
 
 export async function loader() {
-    const { data } = await client.query({
+    const { data } = await clientStore.client.query({
         query: GET_USERS,
     })
     return data?.allUsers
@@ -86,14 +86,14 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (delState) {
-      client.query({
+      clientStore.client.query({
         query: GET_USERS,
         fetchPolicy: 'network-only', // Doesn't check cache before making a network request
       }).then((data) => {
         setTableData(data.data?.allUsers)
       })
     } else {
-      client.query({
+      clientStore.client.query({
         query: GET_USER_BY_NAME,
         variables: { name: inputValue },
         fetchPolicy: (state && state.ok && state.ok === true) ? 'network-only' : 'cache-first', // 因为修改后也需要更新数据

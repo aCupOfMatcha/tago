@@ -1,25 +1,39 @@
 import React from 'react';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import './root.css';
 import { Outlet, useNavigate } from "react-router-dom";
 import routes from "./routerConfig";
 import BreadcrumbComponent from "./breadcrumb";
+import type { MenuProps } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
+import styles from './root.module.scss';
 
 const { Header, Content, Sider } = Layout;
-
-// const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
-//   key,
-//   label: `nav ${key}`,
-// }));
+type MenuItem = Required<MenuProps>['items'][number];
 
 const items2 = routes;
 
 const App: React.FC = () => {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
-  const navigate = useNavigate();
+  const items: MenuItem[] = [
+    {
+      label: 'admin',
+      key: 'user',
+      icon: <SettingOutlined />,
+      popupClassName: "popMenu", // 弹出框样式名
+      children: [
+        { label: '登出', key: 'logout', 
+          onClick: () => {
+            localStorage.removeItem('Authorization');
+            navigate("/login");
+          }
+        },
+      ]
+    },
+  ];
 
   const menuClick = (e: {key: string}) => {
     navigate(e.key);
@@ -27,15 +41,15 @@ const App: React.FC = () => {
 
   return (
     <Layout>
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
+      <Header className={styles.header}>
         <div className="demo-logo" />
-        {/* <Menu
-          theme="dark"
+        <Menu
+          // openKeys={['user']} // 展开的菜单
           mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={items1}
-          style={{ flex: 1, minWidth: 0 }}
-        /> */}
+          selectedKeys={[]} // 因为我不需要选中的样式
+          items={items}
+        >
+        </Menu>
       </Header>
       <Layout>
         <Sider width={200} style={{ background: colorBgContainer }}>
@@ -49,7 +63,7 @@ const App: React.FC = () => {
           >
           </Menu>
         </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
+        <Layout className='layout'>
           <Content
             style={{
               padding: 10,

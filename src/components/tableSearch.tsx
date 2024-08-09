@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import './tableSearch.css';
+import styles from './tableSearch.module.scss';
 import { Input } from "antd";
 
 interface searchComProps {
     searchMethod: (inputValue: string) => void;
-    createMethod: () => void;
+    createMethod?: () => void;
+    type?: 'normal' | 'file';
+    CustomCom?: React.FC;
 }
 
-const tableSearch: React.FC<searchComProps> = ({ searchMethod, createMethod }) => {
+const tableSearch: React.FC<searchComProps> = ({ searchMethod, createMethod, CustomCom, type='normal' }) => {
     const [inputValue, setInputValue] = useState<string>('');
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
     }
     return (
-        <div className="searchCom">
-            <div className="left">
+        <div className={styles.searchCom}>
+            <div className='left'>
                 <Input
                     placeholder="请输入要查询的内容"
                     allowClear
@@ -24,7 +26,9 @@ const tableSearch: React.FC<searchComProps> = ({ searchMethod, createMethod }) =
                 <button className="searchBtn" onClick={() => searchMethod(inputValue)}>查询</button>
             </div>
             <div className="right">
-                <button className="newBtn" onClick={() => createMethod()}>新建</button>
+                {type === 'normal' ? 
+                <>{createMethod && <button className="newBtn" onClick={() => createMethod()}>新建</button>}</> :
+                <>{CustomCom && <CustomCom />}</>}
             </div>
         </div>
     )

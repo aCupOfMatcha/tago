@@ -1,0 +1,29 @@
+@mixin tableSearch {
+    .input {
+        width: 250px;
+        height: 30px;
+    }
+    button {
+        background-color: #1677ff;
+        height: 30px;
+        color: aliceblue;
+        padding: 4px 11px;
+    }
+    .left > .searchBtn {
+        margin-left: 8px;
+    }
+    .right {
+        .newBtn {
+            margin-right: 8px;
+        }
+    } 
+}
+
+.searchCom {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    :global {
+        @include tableSearch;
+    }
+}

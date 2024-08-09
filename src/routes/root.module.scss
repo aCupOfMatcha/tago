@@ -1,0 +1,28 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 24px;
+    ul {
+        background-color: wheat;
+    }
+}
+
+:global {
+    .layout {
+        padding: 0 24px 24px;
+    }
+    // 你不用important怎么跟内联样式争优先级
+    .popMenu {
+        inset: 64px auto auto 92.2% !important;
+        width: 94.75px !important;
+        ul {
+            background-color: #1677ff !important;
+            min-width: 100% !important;
+            li {
+                color: white !important;
+                text-align: center;
+            }
+        }
+    }
+}

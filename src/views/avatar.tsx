@@ -38,7 +38,7 @@ interface avatarProps {
 
 const App: React.FC<avatarProps> = ({ avatar }) => {
   const [loading, setLoading] = useState(false); // 为了用户体验我们还是决定设置loading
-  const avtarInitUrl = avatar.url ? 'http://127.0.0.1:8000/media/' + avatar.url : '';
+  const avtarInitUrl = avatar.url ? 'https://127.0.0.1:8000/media/' + avatar.url : '';
   const [imageUrl, setImageUrl] = useState<string>(avtarInitUrl);
 
   const handleChange: UploadProps['onChange'] = (info) => {
@@ -76,7 +76,7 @@ const App: React.FC<avatarProps> = ({ avatar }) => {
           listType="picture-card" // 上传列表的内建样式
           className="avatar-uploader" // 样式暂且没用
           showUploadList={false} // 是否展示已上传文件列表(因为只是一个头像所以false)
-          action="http://localhost:8000/users/avatar/" // 这个是用来后台校验的，我们直接跳过
+          action="https://localhost:8000/users/avatar/" // 这个是用来后台校验的，我们直接跳过
           beforeUpload={beforeUpload} // 上传前的校验
           onChange={handleChange} // 上传文件改变时的回调
         >

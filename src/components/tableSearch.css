@@ -1,24 +1,16 @@
-.searchCom {
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    .input {
-        width: 250px;
-        height: 30px;
-    }
-    button {
-        background-color: #1677ff;
-        height: 30px;
-        color: aliceblue;
-        padding: 4px 11px;
-    }
-    div {
-        height: 100%;
-    }
-    .left > .searchBtn {
-        margin-left: 8px;
-    }
-    .right > .newBtn {
-        margin-right: 8px;
-    }
+.input {
+    width: 250px;
+    height: 30px;
+}
+button {
+    background-color: #1677ff;
+    height: 30px;
+    color: aliceblue;
+    padding: 4px 11px;
+}
+.left > .searchBtn {
+    margin-left: 8px;
+}
+.right > .newBtn {
+    margin-right: 8px;
 }

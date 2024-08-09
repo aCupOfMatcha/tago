@@ -3,7 +3,7 @@ import { Form, Input, Select, Button } from 'antd';
 import Avatar from './avatar';
 import { GET_USER_BY_ID, EDIT_USER, CREATE_USER } from '../schema/users.tsx';
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import client from '../client';
+import clientStore from '../client';
 import type { FormProps } from 'antd';
 import useNotification from '../components/notification';
 
@@ -25,7 +25,7 @@ type FieldType = {
 const { Option } = Select;
 
 export async function loader(state: any) {
-    const { data } = await client.query({
+    const { data } = await clientStore.client.query({
         query: GET_USER_BY_ID,
         variables: {
             id: state.params.id
@@ -36,7 +36,7 @@ export async function loader(state: any) {
 }
 
 const editUser = async function editUser(user: FieldType) {
-    const { data } = await client.mutate({
+    const { data } = await clientStore.client.mutate({
         mutation: EDIT_USER,
         variables: {
             id: user.id,
@@ -50,7 +50,7 @@ const editUser = async function editUser(user: FieldType) {
 }
 
 const createUser = async function createUser(user: FieldType) {
-    const { data } = await client.mutate({
+    const { data } = await clientStore.client.mutate({
         mutation: CREATE_USER,
         variables: {
             name: user.name,

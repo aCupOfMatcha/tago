@@ -1,8 +1,37 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { makeObservable, observable, action } from'mobx';
 
-const client = new ApolloClient({
-  uri: 'http://localhost:8000/graphql/',
-  cache: new InMemoryCache(),
-});
+class clientStore {
+  client = new ApolloClient({
+    uri: 'https://localhost:8000/graphql/',
+    cache: new InMemoryCache(),
+    headers: {
+      Authorization: `${localStorage.getItem('Authorization')}`,
+    },
+  });
+  constructor() {
+    makeObservable(this, {
+      client: observable,
+      setAuth: action,
+      delAuth: action,
+    });
+  }
+  setAuth = () => {
+    this.client = new ApolloClient({
+      uri: 'https://localhost:8000/graphql/',
+      cache: new InMemoryCache(),
+      headers: {
+        Authorization: `${localStorage.getItem('Authorization')}`,
+      },
+    });;
+  };
+  delAuth = () => {
+    localStorage.removeItem('Authorization');
+    this.client = new ApolloClient({
+      uri: 'https://localhost:8000/graphql/',
+      cache: new InMemoryCache(),
+    });
+  };
+}
 
-export default client;
+export default new clientStore();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal } from 'antd';
 import { DELETE_USER_BY_ID } from '../schema/users';
-import client from '../client';
+import clientStore from '../client';
 import useNotification from '../components/notification';
 
 
@@ -21,7 +21,7 @@ const App: React.FC<UserDeleteProps> = ({ userDelete }) => {
     };
 
     const handleOk = () => {
-        client.mutate({
+        clientStore.client.mutate({
             mutation: DELETE_USER_BY_ID,
             variables: { id: userDelete.id }
         }).then((data) => {
