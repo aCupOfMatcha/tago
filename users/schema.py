@@ -1,6 +1,5 @@
 import graphene
 from graphene_django import DjangoObjectType
-from django.shortcuts import render
 
 from users.models import Person, Avatar
 

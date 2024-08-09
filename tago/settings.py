@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -40,11 +41,21 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles", # Required for GraphiQL
     "graphene_django",
     'corsheaders',
+    'rest_framework',
+    'sslserver',
     'users',
+    'myadmin',
+    'files',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
 GRAPHENE = {
-    "SCHEMA": "users.schema.schema"
+    'SCHEMA': 'tago.schema.main_schema',
 }
 
 MIDDLEWARE = [
@@ -56,6 +67,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'tago.utils.middleware.TokenAuthenticationMiddleware',
 ]
 
 ROOT_URLCONF = 'tago.urls'
@@ -153,3 +165,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # 配置浏览器访问文件的地址：http://127.0.0.1:8000/media/...
 MEDIA_URL = '/media/'
 # 以上表示浏览器传来的url以media开头的，django统一到MEDIA_ROOT配置的目录下去找
+
+SIMPLE_JWT = {
+    'ALGORITHM': 'HS256',  # 指定算法为 HMAC SHA256
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
+    'TOKEN_OBTAIN_SERIALIZER': 'api.serializers.MyTokenObtainPairSerializer',
+}
+
+AUTH_USER_MODEL = 'myadmin.MyAdmin'

@@ -18,7 +18,7 @@ def get_file_md5(file_content):
         return md5_hash.hexdigest()
 def avatar_view(request):
     id = request.POST.get('id')
-    avatar = request.FILES.getlist('avatar')[0]
+    avatar = request.FILES.get('avatar')
     md5 = get_file_md5(bytes(str(avatar), 'utf-8'))
     try:
         avatar_obj = Avatar.objects.get(md5=md5)
